@@ -14,7 +14,7 @@ services:
       - SNS=${SNS}
     devices:
       - /dev/ttyACM0:${SERIAL}
-    resatrt: on-failure
+    restart: on-failure
       
 
 volumes:
