@@ -1,0 +1,20 @@
+services:
+  sns:
+    image: andyj9g/statsnscore-portable
+    container_name: sns
+    ports:
+      - '8899:8899'
+    volumes:
+      - sns:/sns
+  rs485:
+    build: ./
+    container_name: rs485
+    environment:
+      - SERIAL=${SERIAL}
+      - SNS=${SNS}
+    devices:
+      - /dev/ttyACM0:${SERIAL}
+    restart: on-failure
+
+volumes:
+  sns:

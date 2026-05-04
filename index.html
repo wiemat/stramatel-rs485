@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+</body>
+
+</html>
+
+<script async>
+    class LineBreakTransformer {
+        constructor() {
+            // A container for holding stream data until a new line.
+            this.chunks = "";
+        }
+
+        transform(chunk, controller) {
+            // Append new chunks to existing chunks.
+            this.chunks += chunk;
+            // For each line breaks in chunks, send the parsed lines out.
+            const lines = this.chunks.split("\r");
+            this.chunks = lines.pop();
+            lines.forEach((line) => controller.enqueue(line));
+        }
+
+        flush(controller) {
+            // When the stream is closed, flush any remaining chunks out.
+            controller.enqueue(this.chunks);
+        }
+    }
+
+
+
+    async function openPort(params) {
+        // Prompt user to select any serial port.
+        const port = await navigator.serial.requestPort();
+
+
+        // Wait for the serial port to open.
+        await port.open({ baudRate: 19200, stopBits: 1, parity: "none", dataBits: 8 });
+
+        while (port.readable) {
+            const textDecoder = new TextDecoderStream("ascii");
+            const readableStreamClosed = port.readable.pipeTo(textDecoder.writable);
+            const reader = textDecoder.readable
+                .pipeThrough(new TransformStream(new LineBreakTransformer()))
+                .getReader();
+            try {
+                while (true) {
+                    const { value, done } = await reader.read();
+                    if (done) {
+                        // Allow the serial port to be closed later.
+                        reader.releaseLock();
+                        break;
+                        try {
+                            while (true) {
+                                const { value, done } = await reader.read();
+                                if (done) {
+                                    // Allow the serial port to be closed later.
+                                    reader.releaseLock();
+                                    break;
+                                }
+                                if (value) {
+                                    console.log(value);
+                                }
+                            }
+                        } catch (error) {
+                            // TODO: Handle non-fatal read error.
+                        }
+                    }
+                }
+
+            } catch (error) {
+                
+            }
+        }
+    }
+
+
+</script>
