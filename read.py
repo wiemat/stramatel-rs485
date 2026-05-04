@@ -13,7 +13,6 @@ ser = Serial(port=PORT, baudrate=19200, stopbits=1, bytesize=EIGHTBITS, parity=P
 # ttyACM0
 # ser.rs485_mode = rs485.RS485Settings()
 
-a = {"Fo": "bar"}
 puffer={
     "home_timeouts":None,
     "away_timeouts":None,
@@ -28,7 +27,6 @@ puffer={
     "away_points": None,
     "to_go":None,
 }
-
 
 async def read(ser: Serial):
     while True:
