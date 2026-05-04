@@ -14,10 +14,7 @@ services:
       - SNS=${SNS}
     devices:
       - /dev/ttyACM0:${SERIAL}
-    deploy:
-    	restart_policy:
-        condition: on-failure
-        delay: 5s
+    resatrt: on-failure
       
 
 volumes:
