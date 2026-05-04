@@ -16,8 +16,8 @@ services:
       - /dev/ttyACM0:${SERIAL}
     deploy:
     	restart_policy:
-      	    condition: on-failure
-      	    delay: 5s
+        condition: on-failure
+        delay: 5s
       
 
 volumes:
