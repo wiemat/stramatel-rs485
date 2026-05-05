@@ -103,7 +103,9 @@ def read():
                 if gameclock_start_stop == "1":
                     requests.post(url=SNS, data={"message": "stopClock", "data": ""})
                 else:
-                    requests.post(url=SNS, data={"message": "startClock", "data": ""})
+                    # requests.post(url=SNS, data={"message": "startClock", "data": ""})
+                    requests.post(url=SNS, data={"message": "stopPlayclock", "data": ""})
+        
         
             # Playclock
             if playclock_seconds != puffer["playclock_seconds"]:
@@ -114,7 +116,8 @@ def read():
                 puffer["playclock_start_stop"] = playclock_start_stop
                 print("sending Playclock Start/Stop:" , playclock_start_stop)
                 if playclock_start_stop == "i":
-                    requests.post(url=SNS, data={"message": "startPlayclock", "data": ""})
+                    # requests.post(url=SNS, data={"message": "startPlayclock", "data": ""})
+                    requests.post(url=SNS, data={"message": "stopPlayclock", "data": ""})
                 else:
                     requests.post(url=SNS, data={"message": "stopPlayclock", "data": ""})
                 
