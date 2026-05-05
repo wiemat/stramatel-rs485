@@ -6,6 +6,7 @@ services:
       - '8899:8899'
     volumes:
       - sns:/sns
+    restart: always
   rs485:
     build: ./
     container_name: rs485
@@ -14,7 +15,7 @@ services:
       - SNS=${SNS}
     devices:
       - /dev/ttyACM0:${SERIAL}
-    restart: on-failure
+    restart: always
       
 
 volumes:
