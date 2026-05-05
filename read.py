@@ -104,7 +104,7 @@ def read():
                     requests.post(url=SNS, data={"message": "stopClock", "data": ""})
                 else:
                     # requests.post(url=SNS, data={"message": "startClock", "data": ""})
-                    requests.post(url=SNS, data={"message": "stopPlayclock", "data": ""})
+                    requests.post(url=SNS, data={"message": "stopClock", "data": ""})
         
         
             # Playclock
